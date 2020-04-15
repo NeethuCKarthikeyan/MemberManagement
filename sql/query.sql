@@ -21,8 +21,8 @@ CREATE TABLE public.member
     state character varying(50) COLLATE pg_catalog."default",
     country character varying(50) COLLATE pg_catalog."default",
     pin_num integer,
-    created_date date NOT NULL,
-    last_mod_date date,
+    created_date TimeStamp NOT NULL,
+    last_mod_date TimeStamp,
     is_active boolean NOT NULL DEFAULT false,
     is_deleted boolean NOT NULL DEFAULT false
 )

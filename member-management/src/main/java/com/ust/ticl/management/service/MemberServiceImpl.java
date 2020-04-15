@@ -1,11 +1,22 @@
 package com.ust.ticl.management.service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ust.ticl.management.dto.ResponseDto;
 import com.ust.ticl.management.entity.Member;
+import com.ust.ticl.management.repository.MemberRepository;
 
+@Service
 public class MemberServiceImpl implements  MemberService {
+	
+	@Autowired
+	MemberRepository memberRepository;
+	
 
 	@Override
 	public ResponseDto registerMember(Member member) {
@@ -21,7 +32,9 @@ public class MemberServiceImpl implements  MemberService {
 
 	@Override
 	public ResponseDto activateMember(List<Integer> id) {
-		// TODO Auto-generated method stub
+		
+		Timestamp CurrentTimestamp = new Timestamp(System.currentTimeMillis());
+		memberRepository.updateMemberAsActive(true, CurrentTimestamp, id);  
 		return null;
 	}
 
@@ -55,4 +68,4 @@ public class MemberServiceImpl implements  MemberService {
 		return null;
 	}
 
-}
+	}

@@ -2,6 +2,9 @@ package com.ust.ticl.management.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import com.ust.ticl.management.dto.ResponseDto;
 import com.ust.ticl.management.entity.Member;
 
@@ -15,7 +18,5 @@ public interface MemberService {
 	ResponseDto removeMember(List<Integer> id);
 	ResponseDto restoreMember(List<Integer> id);
 	List<Member> getallMembers(String city);
-	
-	
 
 }

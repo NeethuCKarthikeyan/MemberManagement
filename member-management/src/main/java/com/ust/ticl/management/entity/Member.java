@@ -1,6 +1,5 @@
 package com.ust.ticl.management.entity;
-
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +9,9 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Entity
 @Table(name="member")
 @Data
+@Entity
 public class Member {
 	@Id
 	@GeneratedValue
@@ -23,6 +22,9 @@ public class Member {
 
 	@Column(name = "email_id")
 	private String emailId;
+	
+	@Column(name = "password")
+	private String password;
 
 	@Column(name = "mob_num")
 	private Integer mobNum;
@@ -46,15 +48,17 @@ public class Member {
 	private int pinNum;
 	
 	@Column(name = "created_date")
-	private Date createdDate;
+	private Timestamp createdDate;
 	
 	@Column(name = "last_mod_date")
-	private Date lastModDate;
+	private Timestamp lastModDate;
 	
 	@Column(name = "isActive")
 	private boolean is_active;
 	
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
+	
+	
 
 }
