@@ -1,6 +1,5 @@
 package com.ust.ticl.management.entity;
 import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +29,7 @@ public class Member {
 	private Integer mobNum;
 
 	@Column(name = "gender")
-	private char gender;
+	private String gender;
 
 	@Column(name = "address")
 	private String address;
@@ -50,15 +49,14 @@ public class Member {
 	@Column(name = "created_date")
 	private Timestamp createdDate;
 	
-	@Column(name = "last_mod_date")
-	private Timestamp lastModDate;
+	@Column(name = "last_modified_date")
+	private Timestamp lastModifiedDate;
 	
-	@Column(name = "isActive")
-	private boolean is_active;
+	@Column(name = "is_active")
+	private boolean isActive;
 	
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
 	
 	
-
 }

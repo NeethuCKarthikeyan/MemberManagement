@@ -27,56 +27,54 @@ public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
-	ResponseDto responseDto;	
+		
 	
 
 	@PostMapping(value = "register",produces="application/json")
 	public ResponseEntity<ResponseDto> registerMember(@Valid @RequestBody Member member) {
-		responseDto=memberService.registerMember(member);
-		return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);
+		return new ResponseEntity<ResponseDto>(memberService.registerMember(member),HttpStatus.OK);
 
 	}
 	@PostMapping(value = "login",consumes = "application/json",produces="application/json")
 	public ResponseEntity<ResponseDto> memberLogin(@Valid @RequestBody Member member) {
-		return null;
+		return new ResponseEntity<ResponseDto>(memberService.memberLogin(member),HttpStatus.OK);
 		
 	}
 	
 	@PutMapping(value = "activate",produces="application/json")
 	public ResponseEntity<ResponseDto> activateMember(@Valid @RequestBody Id id) {
 		List<Integer> idList=id.getIdList();
-		System.out.println("idList"+idList);
-		responseDto=memberService.activateMember(idList);
-		return new ResponseEntity<ResponseDto>(responseDto,HttpStatus.OK);		
+        System.out.println("idList"+idList);
+		return new ResponseEntity<ResponseDto>(memberService.activateMember(idList),HttpStatus.OK);		
 	}
 	
 	@PutMapping(value = "deactivate",produces="application/json" )
 	public ResponseEntity<ResponseDto> deactivateMember(@Valid @RequestBody Id id) {
-
-		return null;
+		List<Integer> idList=id.getIdList();
+		return new ResponseEntity<ResponseDto>(memberService.deactivateMember(idList),HttpStatus.OK);		
 	}
 	
 	@PutMapping(value = "modifyById/{memberId}",produces="application/json")
 	public ResponseEntity<ResponseDto> modifyMember(@PathVariable(value = "memberId") Integer memberId,@Valid @RequestBody Member member) {
-
-		return null;
+		
+		return new ResponseEntity<ResponseDto>(memberService.modifyMember(member, memberId),HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "removeById",produces="application/json")
 	public ResponseEntity<ResponseDto> removeMember(@Valid @RequestBody Id id) {
-
-		return null;
+		List<Integer> idList=id.getIdList();
+		return new ResponseEntity<ResponseDto>(memberService.removeMember(idList),HttpStatus.OK);		
 	}
 
 	@PutMapping(value = "restoreById",produces="application/json")
 	public ResponseEntity<ResponseDto> restoreMember(@Valid @RequestBody Id id) {
-
-		return null;
-	}
+		List<Integer> idList=id.getIdList();
+		return new ResponseEntity<ResponseDto>(memberService.restoreMember(idList),HttpStatus.OK);		
+		}
 	@GetMapping(value = "getAllMembersByCity",produces="application/json")
 	public ResponseEntity<List<Member>> getallMembers(@Valid @RequestBody String city) {
+		return new ResponseEntity<List<Member>>(memberService.getallMembers(city),HttpStatus.OK);
 
-		return null;
 	}
 	
 	

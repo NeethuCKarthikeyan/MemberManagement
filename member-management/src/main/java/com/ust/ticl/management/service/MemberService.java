@@ -12,11 +12,11 @@ public interface MemberService {
 	
 	ResponseDto registerMember(Member member);
 	ResponseDto memberLogin(Member member);
-	ResponseDto activateMember(List<Integer> id);
-	ResponseDto deactivateMember(List<Integer> id);
-	ResponseDto modifyMember(Member member);
-	ResponseDto removeMember(List<Integer> id);
-	ResponseDto restoreMember(List<Integer> id);
+	ResponseDto activateMember(List<Integer> idList);
+	ResponseDto deactivateMember(List<Integer> idList);
+	ResponseDto modifyMember(Member member,Integer id);
+	ResponseDto removeMember(List<Integer> idList);
+	ResponseDto restoreMember(List<Integer> idList);
 	List<Member> getallMembers(String city);
 
 }
