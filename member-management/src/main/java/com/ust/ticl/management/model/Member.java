@@ -1,4 +1,4 @@
-package com.ust.ticl.management.entity;
+package com.ust.ticl.management.model;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;

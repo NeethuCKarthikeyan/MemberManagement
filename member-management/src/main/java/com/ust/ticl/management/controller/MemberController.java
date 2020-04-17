@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.ust.ticl.management.dto.Id;
+import com.ust.ticl.management.dto.MemberListDto;
 import com.ust.ticl.management.dto.ResponseDto;
-import com.ust.ticl.management.entity.Member;
+import com.ust.ticl.management.model.Member;
+import com.ust.ticl.management.request.MemberInfo;
+import com.ust.ticl.management.response.Response;
 import com.ust.ticl.management.service.MemberService;
 
 
@@ -31,8 +35,8 @@ public class MemberController {
 	
 
 	@PostMapping(value = "register",produces="application/json")
-	public ResponseEntity<ResponseDto> registerMember(@Valid @RequestBody Member member) {
-		return new ResponseEntity<ResponseDto>(memberService.registerMember(member),HttpStatus.OK);
+	public ResponseEntity<Response> registerMember(@Valid @RequestBody MemberInfo memberInfo) {
+		return new ResponseEntity<Response>(memberService.registerMember(memberInfo),HttpStatus.OK);
 
 	}
 	@PostMapping(value = "login",consumes = "application/json",produces="application/json")
@@ -72,8 +76,8 @@ public class MemberController {
 		return new ResponseEntity<ResponseDto>(memberService.restoreMember(idList),HttpStatus.OK);		
 		}
 	@GetMapping(value = "getAllMembersByCity",produces="application/json")
-	public ResponseEntity<List<Member>> getallMembers(@Valid @RequestBody String city) {
-		return new ResponseEntity<List<Member>>(memberService.getallMembers(city),HttpStatus.OK);
+	public ResponseEntity<MemberListDto> getallMembers(@Valid @RequestBody Member member) {
+		return new ResponseEntity<MemberListDto>(memberService.getallMembers(member.getCity()),HttpStatus.OK);
 
 	}
 	

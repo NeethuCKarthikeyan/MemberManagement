@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ust.ticl.management.entity.Member;
+import com.ust.ticl.management.model.Member;
 
 @Repository
 @Transactional
