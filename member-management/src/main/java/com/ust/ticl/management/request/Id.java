@@ -1,4 +1,4 @@
-package com.ust.ticl.management.dto;
+package com.ust.ticl.management.request;
 
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -8,9 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Id {
+public class Id extends BaseRequest{
 	private List<Integer> idList;
 
 }

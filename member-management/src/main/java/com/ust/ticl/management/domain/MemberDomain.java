@@ -1,14 +1,18 @@
 package com.ust.ticl.management.domain;
 
+import java.util.List;
+
 import com.ust.ticl.management.model.Member;
+
 
 public interface MemberDomain {
 	public boolean registerMember(Member member);
-	/*
-	 * public void memberLogin(Member member); public void activateMember(Member
-	 * member); public void deactivatemember(Member member); public void
-	 * updateMember(Member member); public void removeMember(Member member); public
-	 * void restoreMember(Member member); public void getAllMembersInCity(Member
-	 * member);
-	 */
-}
+
+	 public int memberLogin(Member member);
+	 public int activateMember(List<Integer> idList);
+	 public int deactivateMember(List<Integer> idList);
+	 public int modifyMember(Member member,Integer id);
+	 public int removeMember(List<Integer> idList);
+	 public int restoreMember(List<Integer> idList);
+	 public List<Member> getAllMembersInCity(String city);
+	 }

@@ -44,7 +44,7 @@ public class Member {
 	private String country;
 	
 	@Column(name = "pin_num")
-	private int pinNum;
+	private Integer pinNum;
 	
 	@Column(name = "created_date")
 	private Timestamp createdDate;

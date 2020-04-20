@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ust.ticl.management.domain.MemberDomain;
-import com.ust.ticl.management.dto.MemberListDto;
-import com.ust.ticl.management.dto.ResponseDto;
 import com.ust.ticl.management.model.Member;
 import com.ust.ticl.management.repository.MemberRepository;
 import com.ust.ticl.management.request.MemberInfo;
+import com.ust.ticl.management.response.MemberList;
 import com.ust.ticl.management.response.Response;
 import com.ust.ticl.management.service.MemberService;
 
@@ -19,18 +18,18 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDomain memberDomain;
-	
+
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	Response response = new Response();
-	ResponseDto responseDto = new ResponseDto();
+	
 	Member member = new Member();
 
 	@Override
 	public Response registerMember(MemberInfo memberInfo) {
 		member.setEmailId(memberInfo.getEmail());
-		member.setPassword(memberInfo.getEmail());
+		member.setPassword(memberInfo.getPassword());
 		member.setName(memberInfo.getName());
 		member.setMobNum(memberInfo.getMob());
 		boolean result = memberDomain.registerMember(member);
@@ -39,106 +38,156 @@ public class MemberServiceImpl implements MemberService {
 			response.setMessage("Member registered successfully");
 		} else {
 			response.setStatus("failed");
-			response.setMessage("Member registration failed");
+			response.setMessage("Entered Exception while registering member!!!");
 		}
 
 		return response;
 	}
 
 	@Override
-	public ResponseDto memberLogin(Member memberIn) {
+	public Response memberLogin(MemberInfo memberInfo) {
 
-		int row = memberRepository.findMember(memberIn.getEmailId(), memberIn.getPassword());
-		if (row == 1) {
-			responseDto.setStatus("success");
-			responseDto.setMessage("Login successfull");
+		member.setEmailId(memberInfo.getEmail());
+		member.setPassword(memberInfo.getPassword());
+
+		int result = memberDomain.memberLogin(member);
+		if (result == -1) {
+			response.setStatus("failed");
+			response.setMessage("Entered Exception while Login!!!");
 		} else {
-			responseDto.setStatus("failed");
-			responseDto.setMessage("Invalid credentials");
+			if (result == 0) {
+				response.setStatus("failed");
+				response.setMessage("Invalid credentials");
+			} else {
+				response.setStatus("success");
+				response.setMessage("Login Successfull");
+
+			}
+
 		}
 
-		return responseDto;
+		return response;
 	}
 
 	@Override
-	public ResponseDto activateMember(List<Integer> idList) {
-		int response = memberRepository.updateMemberAsActiveOrInactive(true, idList);
-		if (response == 2) {
-			responseDto.setStatus("success");
-			responseDto.setMessage("Member/s Activated successfully");
+	public Response activateMember(List<Integer> idList) {
+		int result = memberDomain.activateMember(idList);
+		if (result == -1) {
+			response.setStatus("failed");
+			response.setMessage("Entered Exception while activating member!!!");
 		} else {
-			responseDto.setStatus("failed");
-			responseDto.setMessage("Member/s activation failed");
+			if (result == idList.size()) {
+				response.setStatus("success");
+				response.setMessage(idList.size()+" Member/s Activated successfully");
+			} else {
+				response.setStatus("failed");
+				response.setMessage("Member/s activation failed");
 
+			}
 		}
-		return responseDto;
+		return response;
 	}
 
 	@Override
-	public ResponseDto deactivateMember(List<Integer> idList) {
+	public Response deactivateMember(List<Integer> idList) {
 
-		int response = memberRepository.updateMemberAsActiveOrInactive(false, idList);
-		if (response == 2) {
-			responseDto.setStatus("success");
-			responseDto.setMessage("Member/s Deactivated successfully");
+		int result = memberDomain.deactivateMember(idList);
+		if (result == -1) {
+			response.setStatus("failed");
+			response.setMessage("Entered Exception while deactivating member!!!");
 		} else {
-			responseDto.setStatus("failed");
-			responseDto.setMessage("Member/s Detivation failed");
+			if (result == idList.size()) {
+				response.setStatus("success");
+				response.setMessage(idList.size()+" Member/s dectivated successfully");
+			} else {
+				response.setStatus("failed");
+				response.setMessage("Member/s deactivation failed");
+
+			}
 		}
-		return responseDto;
+		
+
+		return response;
 	}
 
 	@Override
-	public ResponseDto modifyMember(Member member, Integer id) {
-		int response = memberRepository.updateMember(member.getGender(), member.getAddress(), member.getCity(),
-				member.getState(), member.getCountry(), member.getPinNum(), id);
-		if (response == 1) {
-			responseDto.setStatus("success");
-			responseDto.setMessage("Member details updated successfully");
+	public Response modifyMember(MemberInfo memberInfo, Integer id) {
+		Member meber=new Member();
+		member.setGender(memberInfo.getGender());
+		member.setAddress(memberInfo.getAddress());
+		member.setCity(memberInfo.getCity());
+		member.setState(memberInfo.getState());
+		member.setCountry(memberInfo.getCountry());
+		member.setPinNum(memberInfo.getPin());
+		System.out.println("id from service impl"+id);
+		int result = memberDomain.modifyMember(member,id);
+				if (result == -1) {
+			response.setStatus("failed");
+			response.setMessage("Entered Exception while modifying member!!!");
 		} else {
-			responseDto.setStatus("failed");
-			responseDto.setMessage("Member updation failed");
+			if (result == 1) {
+				response.setStatus("success");
+				response.setMessage("Member updated successfully");
+			} else {
+				response.setStatus("failed");
+				response.setMessage("Member updation failed");
 
+			}
 		}
-		return responseDto;
+		return response;
 	}
 
 	@Override
-	public ResponseDto removeMember(List<Integer> idList) {
+	public Response removeMember(List<Integer> idList) {
 
-		int response = memberRepository.removeOrRestoreMember(true, idList);
-		if (response == 2) {
-			responseDto.setStatus("success");
-			responseDto.setMessage("Member/s Removed successfully");
+		int result = memberDomain.removeMember(idList);
+		if (result == -1) {
+			response.setStatus("failed");
+			response.setMessage("Entered Exception while removing member!!!");
 		} else {
-			responseDto.setStatus("failed");
-			responseDto.setMessage("Unable to remove Member");
+			if (result == idList.size()) {
+				response.setStatus("success");
+				response.setMessage("Member/s Removed successfully");
+			} else {
+				response.setStatus("failed");
+				response.setMessage("Member/s Removal failed");
 
+			}
 		}
-		return responseDto;
+		return response;
 	}
 
 	@Override
-	public ResponseDto restoreMember(List<Integer> idList) {
+	public Response restoreMember(List<Integer> idList) {
 
-		int response = memberRepository.removeOrRestoreMember(false, idList);
-		if (response == 2) {
-			responseDto.setStatus("success");
-			responseDto.setMessage("Member/s Restored successfully");
+		int result = memberDomain.restoreMember(idList);
+		if (result == -1) {
+			response.setStatus("failed");
+			response.setMessage("Entered Exception while Restoring member!!!");
 		} else {
-			responseDto.setStatus("failed");
-			responseDto.setMessage("Unable to restore Member/s ");
+			if (result == idList.size()) {
+				response.setStatus("success");
+				response.setMessage("Member/s Restored successfully");
+			} else {
+				response.setStatus("failed");
+				response.setMessage("Member/s Restore failed");
 
+			}
 		}
-		return responseDto;
+		return response;
 	}
 
 	@Override
-	public MemberListDto getallMembers(String city) {
-		MemberListDto memberList = new MemberListDto();
-		List<Member> mList = memberRepository.findAllMembersInCity(city);
-		memberList.setMember(mList);
-		return memberList;
+	public MemberList getallMembers(String city) {
+		MemberList memberList = new MemberList();
+		List<Member> result = memberDomain.getAllMembersInCity(city);
+	    memberList.setMember(result);
+	    if(result!=null) 
+	    {
+			return memberList;	
+	    }
+	    else
+	    	return null;
 	}
 
 }
