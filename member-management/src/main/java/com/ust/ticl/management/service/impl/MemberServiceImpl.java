@@ -112,7 +112,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Response modifyMember(MemberInfo memberInfo, Integer id) {
-		Member meber=new Member();
+		Member member=new Member();
 		member.setGender(memberInfo.getGender());
 		member.setAddress(memberInfo.getAddress());
 		member.setCity(memberInfo.getCity());

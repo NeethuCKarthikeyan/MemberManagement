@@ -33,7 +33,6 @@ public class MemberDomainImpl implements MemberDomain {
 		} catch (Exception e) {
 			return -1;
 		}
-
 	}
 
 	@Override
