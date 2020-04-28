@@ -95,6 +95,10 @@ public class MemberDomainImpl implements MemberDomain {
 		
 		try {
 			List<Member> mList=memberRepository.findAllMembersInCity(city);
+			for(Member member : mList) {
+				member.setPassword("******");
+				
+			}
 			return mList;
 		} catch (Exception e) {
 			return null;

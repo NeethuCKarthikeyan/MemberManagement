@@ -34,7 +34,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query("UPDATE Member m SET m.gender= :gender,m.address=:address,m.city=:city,m.state=:state,m.country=:country,m.pinNum=:pinNum,m.lastModifiedDate = CURRENT_TIMESTAMP WHERE m.id in(:id)")
     int updateMember(@Param("gender")String gender,@Param("address")String address,@Param("city")String city,@Param("state")String state,@Param("country")String country,@Param("pinNum")Integer pinNum, @Param("id")Integer id);
     
-    @Query(value="SELECT * FROM Member m WHERE m.city = :city",nativeQuery = true)
+    @Query(value="SELECT * FROM Member m WHERE m.city = :city and m.is_active=true",nativeQuery = true)
     List<Member> findAllMembersInCity( @Param("city")String city);
     
    

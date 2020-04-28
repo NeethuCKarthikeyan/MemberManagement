@@ -132,7 +132,7 @@ public class MemberController {
 			if (!CollectionUtils.isEmpty(memberList.getMember()))
 				return new ResponseEntity<MemberList>(memberList, HttpStatus.OK);
 			else
-				throw new DataNotFoundException("No members found in city : "+memberInfo.getCity());
+				throw new DataNotFoundException("No active members found in city : "+memberInfo.getCity());
 		} else
 			LOG.error("city is not provided");
 			throw new MemberManangementBusinessException("Enter the city in Request");

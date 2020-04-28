@@ -184,6 +184,7 @@ public class MemberServiceImpl implements MemberService {
 	    memberList.setMember(result);
 	    if(result!=null) 
 	    {
+	    	
 			return memberList;	
 	    }
 	    else
