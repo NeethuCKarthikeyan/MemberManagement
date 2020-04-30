@@ -1,5 +1,6 @@
 package com.ust.ticl.management.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ust.ticl.management.domain.MemberDomain;
 import com.ust.ticl.management.model.Member;
+import com.ust.ticl.management.model.Trust;
 import com.ust.ticl.management.repository.MemberRepository;
 import com.ust.ticl.management.request.MemberInfo;
 import com.ust.ticl.management.response.MemberList;
@@ -23,22 +25,36 @@ public class MemberServiceImpl implements MemberService {
 	private MemberRepository memberRepository;
 
 	Response response = new Response();
-	
+
 	Member member = new Member();
 
 	@Override
 	public Response registerMember(MemberInfo memberInfo) {
+
+		List<Trust> tlist = new ArrayList<Trust>();
 		member.setEmailId(memberInfo.getEmail());
 		member.setPassword(memberInfo.getPassword());
 		member.setName(memberInfo.getName());
 		member.setMobNum(memberInfo.getMob());
+		for (String tname : memberInfo.getTrustList()) {
+			Trust t = new Trust();
+			t.setMemberName(memberInfo.getName());
+			t.setTrustName(tname);
+			tlist.add(t);
+		}
+
 		boolean result = memberDomain.registerMember(member);
-		if (result == true) {
+		boolean result1 = memberDomain.addMembeerToTrust(tlist);
+		if (result == true && result1 == true) {
 			response.setStatus("success");
 			response.setMessage("Member registered successfully");
-		} else {
+		} else if (result == false && result1 == false) {
 			response.setStatus("failed");
 			response.setMessage("Entered Exception while registering member!!!");
+		} else {
+			response.setStatus("failed");
+			response.setMessage("Member registration incomplete");
+
 		}
 
 		return response;
@@ -78,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			if (result == idList.size()) {
 				response.setStatus("success");
-				response.setMessage(idList.size()+" Member/s Activated successfully");
+				response.setMessage(idList.size() + " Member/s Activated successfully");
 			} else {
 				response.setStatus("failed");
 				response.setMessage("Member/s activation failed");
@@ -98,30 +114,29 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			if (result == idList.size()) {
 				response.setStatus("success");
-				response.setMessage(idList.size()+" Member/s dectivated successfully");
+				response.setMessage(idList.size() + " Member/s dectivated successfully");
 			} else {
 				response.setStatus("failed");
 				response.setMessage("Member/s deactivation failed");
 
 			}
 		}
-		
 
 		return response;
 	}
 
 	@Override
 	public Response modifyMember(MemberInfo memberInfo, Integer id) {
-		Member member=new Member();
+		Member member = new Member();
 		member.setGender(memberInfo.getGender());
 		member.setAddress(memberInfo.getAddress());
 		member.setCity(memberInfo.getCity());
 		member.setState(memberInfo.getState());
 		member.setCountry(memberInfo.getCountry());
 		member.setPinNum(memberInfo.getPin());
-		System.out.println("id from service impl"+id);
-		int result = memberDomain.modifyMember(member,id);
-				if (result == -1) {
+		System.out.println("id from service impl" + id);
+		int result = memberDomain.modifyMember(member, id);
+		if (result == -1) {
 			response.setStatus("failed");
 			response.setMessage("Entered Exception while modifying member!!!");
 		} else {
@@ -181,14 +196,12 @@ public class MemberServiceImpl implements MemberService {
 	public MemberList getallMembers(String city) {
 		MemberList memberList = new MemberList();
 		List<Member> result = memberDomain.getAllMembersInCity(city);
-	    memberList.setMember(result);
-	    if(result!=null) 
-	    {
-	    	
-			return memberList;	
-	    }
-	    else
-	    	return null;
+		memberList.setMember(result);
+		if (result != null) {
+
+			return memberList;
+		} else
+			return null;
 	}
 
 }

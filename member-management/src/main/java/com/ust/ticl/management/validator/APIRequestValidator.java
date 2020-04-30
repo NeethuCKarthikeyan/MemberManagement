@@ -10,7 +10,7 @@ import com.ust.ticl.management.request.MemberInfo;
 public class APIRequestValidator {
 	public boolean validateRegiserRequest(MemberInfo memberInfo) {
 		if (memberInfo.getEmail() != null && memberInfo.getPassword() != null && memberInfo.getName() != null
-				&& memberInfo.getMob() != null)
+				&& memberInfo.getMob() != null&& memberInfo.getTrustList().size()>0)
 			return true;
 		else
 			return false;

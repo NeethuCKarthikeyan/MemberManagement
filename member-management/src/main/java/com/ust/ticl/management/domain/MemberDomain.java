@@ -3,11 +3,12 @@ package com.ust.ticl.management.domain;
 import java.util.List;
 
 import com.ust.ticl.management.model.Member;
+import com.ust.ticl.management.model.Trust;
 
 
 public interface MemberDomain {
-	public boolean registerMember(Member member);
-
+	 public boolean registerMember(Member member);
+	 public boolean addMembeerToTrust(List<Trust> tList);
 	 public int memberLogin(Member member);
 	 public int activateMember(List<Integer> idList);
 	 public int deactivateMember(List<Integer> idList);

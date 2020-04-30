@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ust.ticl.management.domain.MemberDomain;
 import com.ust.ticl.management.model.Member;
+import com.ust.ticl.management.model.Trust;
 import com.ust.ticl.management.repository.MemberRepository;
+import com.ust.ticl.management.repository.TrustRepository;
 
 @Component
 public class MemberDomainImpl implements MemberDomain {
 
 	@Autowired
 	MemberRepository memberRepository;
+
+	@Autowired
+	TrustRepository trustRepository;
 
 	@Override
 	public boolean registerMember(Member member) {
@@ -57,7 +62,7 @@ public class MemberDomainImpl implements MemberDomain {
 	}
 
 	@Override
-	public int modifyMember(Member member,Integer id) {
+	public int modifyMember(Member member, Integer id) {
 		try {
 			int result = memberRepository.updateMember(member.getGender(), member.getAddress(), member.getCity(),
 					member.getState(), member.getCountry(), member.getPinNum(), id);
@@ -76,7 +81,7 @@ public class MemberDomainImpl implements MemberDomain {
 		} catch (Exception e) {
 			return -1;
 		}
-				
+
 	}
 
 	@Override
@@ -87,22 +92,32 @@ public class MemberDomainImpl implements MemberDomain {
 		} catch (Exception e) {
 			return -1;
 		}
-		
+
 	}
 
 	@Override
 	public List<Member> getAllMembersInCity(String city) {
-		
+
 		try {
-			List<Member> mList=memberRepository.findAllMembersInCity(city);
-			for(Member member : mList) {
+			List<Member> mList = memberRepository.findAllMembersInCity(city);
+			for (Member member : mList) {
 				member.setPassword("******");
-				
+
 			}
 			return mList;
 		} catch (Exception e) {
 			return null;
-		
+
+		}
+	}
+
+	@Override
+	public boolean addMembeerToTrust(List<Trust> tList) {
+		try {
+			trustRepository.saveAll(tList);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
