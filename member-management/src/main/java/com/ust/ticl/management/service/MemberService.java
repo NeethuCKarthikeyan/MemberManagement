@@ -18,5 +18,6 @@ public interface MemberService {
 	Response removeMember(List<Integer> idList);
 	Response restoreMember(List<Integer> idList);
 	MemberList getallMembers(String city);
+	MemberList getallMembersInTrust(String trustName);
 
 }

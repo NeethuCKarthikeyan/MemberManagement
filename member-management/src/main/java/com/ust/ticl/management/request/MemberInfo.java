@@ -20,5 +20,6 @@ public class MemberInfo extends BaseRequest {
 	private String country;
 	private Integer pin; 
 	
+	
 
 }

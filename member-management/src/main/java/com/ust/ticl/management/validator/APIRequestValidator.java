@@ -2,6 +2,8 @@ package com.ust.ticl.management.validator;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Component;
 
 import com.ust.ticl.management.request.MemberInfo;
@@ -36,6 +38,14 @@ public class APIRequestValidator {
 		else
 			return false;
 
+	}
+
+	public boolean validateTrust(String trustName) {
+		if(trustName!=null)
+			return true;
+		else
+			return false;
+		
 	}
 
 

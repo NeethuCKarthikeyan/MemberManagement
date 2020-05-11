@@ -41,13 +41,13 @@ public class MemberController {
 	@PostMapping(value = "register", produces = "application/json")
 	public ResponseEntity<Response> registerMember(@Valid @RequestBody MemberInfo memberInfo)
 			throws MemberManangementBusinessException {
-		LOG.info("Entering to member controller :Register method"); 
+		LOG.info("Entering to member controller :Register method");
 		boolean validator = apiRequestValidator.validateRegiserRequest(memberInfo);
 		if (validator == true)
 			return new ResponseEntity<Response>(memberService.registerMember(memberInfo), HttpStatus.OK);
 		else
 			LOG.error("All required details are not provided");
-			throw new MemberManangementBusinessException("Enter all required Information in the Request");
+		throw new MemberManangementBusinessException("Enter all required Information in the Request");
 	}
 
 	@PostMapping(value = "login", consumes = "application/json", produces = "application/json")
@@ -59,7 +59,7 @@ public class MemberController {
 			return new ResponseEntity<Response>(memberService.memberLogin(memberInfo), HttpStatus.OK);
 		else
 			LOG.error("Email id or pasword missing");
-			throw new MemberManangementBusinessException("Enter EmailId and Password to Login");
+		throw new MemberManangementBusinessException("Enter EmailId and Password to Login");
 
 	}
 
@@ -73,7 +73,7 @@ public class MemberController {
 			return new ResponseEntity<Response>(memberService.activateMember(idList), HttpStatus.OK);
 		else
 			LOG.error("Id is not provided");
-			throw new MemberManangementBusinessException("Enter id in Request");
+		throw new MemberManangementBusinessException("Enter id in Request");
 	}
 
 	@PutMapping(value = "deactivate", produces = "application/json")
@@ -86,7 +86,7 @@ public class MemberController {
 			return new ResponseEntity<Response>(memberService.deactivateMember(idList), HttpStatus.OK);
 		else
 			LOG.error("Id is not provided");
-			throw new MemberManangementBusinessException("Enter id in Request");
+		throw new MemberManangementBusinessException("Enter id in Request");
 
 	}
 
@@ -106,7 +106,7 @@ public class MemberController {
 			return new ResponseEntity<Response>(memberService.removeMember(idList), HttpStatus.OK);
 		else
 			LOG.error("Id is not provided");
-			throw new MemberManangementBusinessException("Enter id in Request");
+		throw new MemberManangementBusinessException("Enter id in Request");
 	}
 
 	@PutMapping(value = "restoreById", produces = "application/json")
@@ -118,7 +118,7 @@ public class MemberController {
 			return new ResponseEntity<Response>(memberService.restoreMember(idList), HttpStatus.OK);
 		else
 			LOG.error("Id is not provided");
-			throw new MemberManangementBusinessException("Enter id in Request");
+		throw new MemberManangementBusinessException("Enter id in Request");
 	}
 
 	@GetMapping(value = "getAllMembersByCity", produces = "application/json")
@@ -132,10 +132,24 @@ public class MemberController {
 			if (!CollectionUtils.isEmpty(memberList.getMember()))
 				return new ResponseEntity<MemberList>(memberList, HttpStatus.OK);
 			else
-				throw new DataNotFoundException("No active members found in city : "+memberInfo.getCity());
+				throw new DataNotFoundException("No active members found in city : " + memberInfo.getCity());
 		} else
 			LOG.error("city is not provided");
-			throw new MemberManangementBusinessException("Enter the city in Request");
+		throw new MemberManangementBusinessException("Enter the city in Request");
+
+	}
+
+	@GetMapping(value = "getAllMembersInTrust/{trust}", produces = "application/json")
+	public ResponseEntity<MemberList> getallMembersInTrust(@PathVariable(value = "trust") String trustName)
+			 throws DataNotFoundException {
+		LOG.info("Entering to member controller :GetAllMembersInTrust method");
+		MemberList memberList = null;
+
+		memberList = memberService.getallMembersInTrust(trustName);
+		if (!CollectionUtils.isEmpty(memberList.getMember()))
+			return new ResponseEntity<MemberList>(memberList, HttpStatus.OK);
+		else
+			throw new DataNotFoundException("No active members found in Trust : " + trustName);
 
 	}
 

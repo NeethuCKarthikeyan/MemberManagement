@@ -16,4 +16,5 @@ public interface MemberDomain {
 	 public int removeMember(List<Integer> idList);
 	 public int restoreMember(List<Integer> idList);
 	 public List<Member> getAllMembersInCity(String city);
+	 public List<Member> getAllMembersInTrust(String trustName);
 	 }

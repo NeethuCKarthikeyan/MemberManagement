@@ -121,4 +121,24 @@ public class MemberDomainImpl implements MemberDomain {
 		}
 	}
 
+	@Override
+	public List<Member> getAllMembersInTrust(String trustName) {
+		
+		try {
+			List<Member> mList = memberRepository.findAllMembersInTrust(trustName);
+			
+			  for (Member member : mList) { 
+				  member.setPassword("******");
+			  }
+			  
+			 
+			 
+			return mList;
+	} catch (Exception e) {
+			return null;
+
+		}
+
+	}
+
 }

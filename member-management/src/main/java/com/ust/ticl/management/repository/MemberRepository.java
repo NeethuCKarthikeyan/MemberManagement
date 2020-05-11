@@ -37,6 +37,10 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @Query(value="SELECT * FROM Member m WHERE m.city = :city and m.is_active=true",nativeQuery = true)
     List<Member> findAllMembersInCity( @Param("city")String city);
     
+    @Query(value="SELECT * FROM Member m WHERE m.is_active=true and m.name in (select t.member_name from trust t where t.trust_name=:trust)",nativeQuery = true)
+	List<Member> findAllMembersInTrust( @Param("trust")String trustName);
+
+    
    
     
     

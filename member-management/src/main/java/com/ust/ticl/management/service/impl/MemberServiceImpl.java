@@ -204,4 +204,18 @@ public class MemberServiceImpl implements MemberService {
 			return null;
 	}
 
+	@Override
+	public MemberList getallMembersInTrust(String trustName) {
+		MemberList memberList = new MemberList();
+		List<Member> result = memberDomain.getAllMembersInTrust(trustName);
+		memberList.setMember(result);
+		if (result != null) {
+
+			return memberList;
+		} else
+			return null;
+	}
+		
+	
+
 }
