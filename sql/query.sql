@@ -32,3 +32,30 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.member
     OWNER to postgres;
+	
+	
+	
+CREATE SEQUENCE public.trust_id_sequence
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.trust_id_sequence
+    OWNER TO postgres;	
+	
+	
+CREATE TABLE public.trust
+(
+    id integer NOT NULL,
+    trust_name character varying(50) COLLATE pg_catalog."default",
+    member_name character varying(50) COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.trust
+    OWNER to postgres;	
+	
+	
